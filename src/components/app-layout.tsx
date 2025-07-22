@@ -8,6 +8,25 @@ import { AppFooter } from '@/components/app-footer'
 import { ClusterChecker } from '@/components/cluster/cluster-ui'
 import { AccountChecker } from '@/components/account/account-ui'
 
+import { 
+  createDefaultAuthorizationCache, 
+  createDefaultChainSelector, 
+  createDefaultWalletNotFoundHandler,
+  registerMwa, 
+} from '@solana-mobile/wallet-standard-mobile';
+
+registerMwa({
+  appIdentity: {
+    name: 'My app',
+    uri: 'https://myapp.io',
+    icon: 'relative/path/to/icon.png', // resolves to https://myapp.io/relative/path/to/icon.png
+  },    
+  authorizationCache: createDefaultAuthorizationCache(),
+  chains: ['solana:devnet', 'solana:mainnet'],
+  chainSelector: createDefaultChainSelector(),
+  onWalletNotFound: createDefaultWalletNotFoundHandler(),
+})
+
 export function AppLayout({
   children,
   links,
@@ -15,6 +34,9 @@ export function AppLayout({
   children: React.ReactNode
   links: { label: string; path: string }[]
 }) {
+
+
+
   return (
     <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
       <div className="flex flex-col min-h-screen">
